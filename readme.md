@@ -8,14 +8,16 @@ The bot logs no information, and is extensible.
 In order to use this bot, it will require a token from your bot. 
 This token is a System Enviroment Variable with the name *BAJ_TOKEN*.
 
-### Permissions and Scope
-While coding this bot, the permissions are all allowed. Further in the future,
-the permissions will be culled to only allow needed permissions.
+To use the bot in your server, you will need a few predetermined channels and categories.
+They are defined in the BotConfiguration class, and are as follows:
 
-The used scopes are as follows:
-    ```
-    application.commands
-    ```
-    ```
-    bot
-    ```
+```
+/** Channel where bot commands are used */
+    String botCommandChannel = "bot-commands";
+    /** Channel where roles are selected */
+    String roleReactChannel = "role-select";
+    /** Channel of where the voice hub is located */
+    String voiceHubChannel = "Hub (Join for Voice Channel)";
+    /** Category of where the voice hub is located */
+    String voiceHubCategory = "Hub Channels";
+```
