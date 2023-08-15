@@ -31,7 +31,7 @@ public class VoiceHubListener extends ListenerAdapter {
         }
 
         if (leftChannel != null) {
-            if (Objects.requireNonNull(event.getChannelLeft()).asVoiceChannel().getMembers().isEmpty() && !event.getChannelLeft().asVoiceChannel().getName().equals(BotConfiguration.voiceHubChannel) && Objects.equals(event.getChannelLeft().getParentCategory(), BotConfiguration.voiceHubCategory)) {
+            if (Objects.requireNonNull(event.getChannelLeft()).asVoiceChannel().getMembers().isEmpty() && !event.getChannelLeft().asVoiceChannel().getName().equals(BotConfiguration.voiceHubChannel) && Objects.requireNonNull(event.getChannelLeft().getParentCategory()).getName().equals(BotConfiguration.voiceHubCategory)) {
                 // If channel is empty and not the hub channel, run this.
                 onChannelDelete(event);
             }
