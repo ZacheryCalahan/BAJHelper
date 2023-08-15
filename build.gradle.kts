@@ -4,7 +4,7 @@ plugins {
     id("java")
 }
 
-application.mainClass = "com.zcalahan.bajhelper.bot" //
+application.mainClass = "com.zcalahan.bajhelper.Bot" //
 
 group = "com.zcalahan"
 version = "1.0"

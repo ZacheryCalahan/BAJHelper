@@ -21,15 +21,12 @@ public abstract class CommandBase extends ListenerAdapter {
     /** Determines whether or not the command is locked to a #bot-commands channel */
     protected boolean botChannelOnly;
 
-
+    /** Initializes necessary fields required to sucessfully create a command. */
     public CommandBase(String name) {
         this.name = name;
         ephemeral = false;
         commandDescription = "Default command with no implementation";
         botChannelOnly = true;
-    }
-
-    protected CommandBase() {
     }
 
     /** The code that is run when the command is called. */

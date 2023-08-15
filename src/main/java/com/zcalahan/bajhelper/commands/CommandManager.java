@@ -1,7 +1,10 @@
 package com.zcalahan.bajhelper.commands;
 
 import com.zcalahan.bajhelper.BotConfiguration;
-import com.zcalahan.bajhelper.commands.utils.ServerPrintCommand;
+import com.zcalahan.bajhelper.commands.voicehubcommands.SetUserlimitCommand;
+import com.zcalahan.bajhelper.commands.voicehubcommands.RenameChannelCommand;
+import com.zcalahan.bajhelper.commands.voicehubcommands.SetWhitelistCommand;
+import com.zcalahan.bajhelper.commands.voicehubcommands.WhitelistCommand;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -11,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
-/** This class links the commands and discord in an orderly fashion. */
+/** This class oversees each individual command, and streamlines the command addition process and the execution process. */
 
 public class CommandManager extends ListenerAdapter {
     HashMap<String, CommandBase> commands = new HashMap<String, CommandBase>();
@@ -22,8 +25,15 @@ public class CommandManager extends ListenerAdapter {
     public CommandManager(JDA api) {
         this.api = api;
 
-        commands.put("ping", new PingCommand("ping"));    // This is a test command. Comment out when not in use.
-        commands.put("print", new ServerPrintCommand("print"));
+        // General Commands
+        commands.put("ping", new PingCommand("ping"));
+        //commands.put("print", new ServerPrintCommand("print"));
+
+        // Hub Commands
+        commands.put("set-whitelist", new SetWhitelistCommand("set-whitelist"));
+        commands.put("whitelist", new WhitelistCommand("whitelist"));
+        commands.put("rename-channel", new RenameChannelCommand("rename-channel"));
+        commands.put("set-userlimit", new SetUserlimitCommand("set-userlimit"));
         uploadCommands();
     }
 

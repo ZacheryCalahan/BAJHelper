@@ -1,6 +1,5 @@
 package com.zcalahan.bajhelper.listeners;
 
-
 import com.zcalahan.bajhelper.BotConfiguration;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.UserSnowflake;
@@ -9,13 +8,14 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 import java.util.List;
 
+/** Listener designed to listen to reactions to various emojis. Changes roles based on reaction. */
 public class RoleSelectListener extends ListenerAdapter {
     HashMap<String, String> roles = new HashMap<>();
 
+    /** Roles and respective emojis go here. */
     public RoleSelectListener() {
         roles.put("UnicodeEmoji(codepoints=U+1f5a5U+fe0f)", "Programmer");
         roles.put("UnicodeEmoji(codepoints=U+1f3ae)", "Player");
@@ -30,10 +30,11 @@ public class RoleSelectListener extends ListenerAdapter {
     }
 
     @Override
-    public void onMessageReactionRemove(MessageReactionRemoveEvent event) {
+    public void onMessageReactionRemove(@NotNull MessageReactionRemoveEvent event) {
         roleSelect(false, event);
     }
 
+    /** Changes user roles based on type of reaction. */
     public void roleSelect(boolean addRole, GenericMessageReactionEvent event) {
         // Get info
         UserSnowflake user = event.retrieveUser().complete();

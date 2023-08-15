@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 public class PingCommand extends CommandBase {
 
     public PingCommand(String name) {
-        this.name = name;
+        super(name);
         ephemeral = true;
         commandDescription = "Tells the bot to play Ping Pong!";
         botChannelOnly = true;

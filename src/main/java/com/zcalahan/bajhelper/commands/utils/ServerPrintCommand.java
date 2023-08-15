@@ -9,9 +9,10 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.util.Objects;
 
+/** This is a command with no other use than to get the string representation of a Discord Emoji. */
 public class ServerPrintCommand extends CommandBase {
     public ServerPrintCommand(String name) {
-        this.name = name;
+        super(name);
         ephemeral = false;
         commandDescription = "Prints to the server console the emoji.toString() what you entered.";
         botChannelOnly = true;
