@@ -1,6 +1,5 @@
 package com.zcalahan.bajhelper.listeners;
 
-import ch.qos.logback.core.net.SocketConnector;
 import com.zcalahan.bajhelper.BotConfiguration;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
@@ -10,15 +9,12 @@ import net.dv8tion.jda.api.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import okio.Path;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /** Listener designed to listen to reactions to various emojis. Changes roles based on reaction. */
 public class RoleSelectListener extends ListenerAdapter {
@@ -32,7 +28,7 @@ public class RoleSelectListener extends ListenerAdapter {
 
     @Override
     public void onGuildReady(GuildReadyEvent event) {
-        //saveRoles(event.getGuild());
+
     }
 
     @Override
@@ -86,9 +82,7 @@ public class RoleSelectListener extends ListenerAdapter {
             fis.close();
             return mapInFile;
         } catch (Exception e) {
-            HashMap<String, String> temp = new HashMap<>();
-            return temp;
-
+            return new HashMap<String, String>();
         }
 
 
@@ -107,8 +101,6 @@ public class RoleSelectListener extends ListenerAdapter {
             oos.flush();
             oos.close();
             fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException ignored) {}
     }
 }

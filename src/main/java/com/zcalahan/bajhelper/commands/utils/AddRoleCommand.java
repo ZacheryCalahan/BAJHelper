@@ -21,9 +21,9 @@ public class AddRoleCommand extends CommandBase {
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        String emoji = event.getOption("emoji").getAsString();
+        String emoji = Objects.requireNonNull(event.getOption("emoji")).getAsString();
         emoji = Emoji.fromFormatted(emoji).toString();
-        String rolename = event.getOption("rolename").getAsString();
+        String rolename = Objects.requireNonNull(event.getOption("rolename")).getAsString();
         RoleSelectListener.roles.put(emoji, rolename);
         RoleSelectListener.saveRoles(Objects.requireNonNull(event.getGuild()));
         event.getGuild().createRole().setName(rolename).complete();
