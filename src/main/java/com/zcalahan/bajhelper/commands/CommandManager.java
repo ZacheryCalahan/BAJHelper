@@ -55,7 +55,6 @@ public class CommandManager extends ListenerAdapter {
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (commands.containsKey(event.getName())) {
             CommandBase command = commands.get(event.getName());
-
             if (command.botChannelOnly && !event.getChannel().getName().equals(BotConfiguration.botCommandChannel)) {
                 event.deferReply().setEphemeral(true).queue();
                 event.getHook().sendMessage("You can't use this command in this channel. Please use the " + BotConfiguration.botCommandChannel + " channel.").queue();

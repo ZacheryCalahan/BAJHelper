@@ -3,9 +3,13 @@ package com.zcalahan.bajhelper.commands.voicehubcommands;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -18,30 +22,38 @@ public class SetUserlimitCommand extends HubCommandBase {
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        event.deferReply().setEphemeral(ephemeral).queue();
+        // Check that all options are filled out.
+        List<OptionMapping> validator = new ArrayList<>();
+        validator.add(event.getOption("userlimit"));
 
-        Map<VoiceChannel, TextChannel> channels = voiceAdmins.get(event.getMember());
-        // Get VoiceChannel (yes this code sucks. it's what I got.
-        VoiceChannel voiceChannel = null;
-        for (VoiceChannel channel : channels.keySet()) {
-            voiceChannel = channel;
-            break;
-        }
+        if (validateOptions(validator)) {
+            event.deferReply().setEphemeral(ephemeral).queue();
 
-        // Check that channel belongs to user, and is in the text chat.
-        if (voiceAdmins.containsKey(event.getMember()) && event.getChannel().equals(channels.get(voiceChannel))) {
-            // Get Options
-            int userlimit = Objects.requireNonNull(event.getOption("userlimit")).getAsInt();
-            System.out.println(userlimit);
-            if (userlimit > 0 || userlimit < 99) {
-                assert voiceChannel != null;
-                voiceChannel.getManager().setUserLimit(userlimit).queue();
-                event.getHook().sendMessage("User limit set to: " + userlimit).queue();
+            Map<VoiceChannel, TextChannel> channels = voiceAdmins.get(event.getMember());
+            // Get VoiceChannel (yes this code sucks. it's what I got.
+            VoiceChannel voiceChannel = null;
+            for (VoiceChannel channel : channels.keySet()) {
+                voiceChannel = channel;
+                break;
+            }
+
+            // Check that channel belongs to user, and is in the text chat.
+            if (voiceAdmins.containsKey(event.getMember()) && event.getChannel().equals(channels.get(voiceChannel))) {
+                // Get Options
+                int userlimit = Objects.requireNonNull(event.getOption("userlimit")).getAsInt();
+                System.out.println(userlimit);
+                if (userlimit > 0 || userlimit < 99) {
+                    assert voiceChannel != null;
+                    voiceChannel.getManager().setUserLimit(userlimit).queue();
+                    event.getHook().sendMessage("User limit set to: " + userlimit).queue();
+                } else {
+                    event.getHook().sendMessage("User limit must be between 0 and 99.").queue();
+                }
             } else {
-                event.getHook().sendMessage("User limit must be between 0 and 99.").queue();
+                event.getHook().sendMessage("You do not have permission to use this.").queue();
             }
         } else {
-            event.getHook().sendMessage("You do not have permission to use this.").queue();
+            event.reply("The command you sent was not properly filled out.").setEphemeral(true).queue();
         }
     }
 

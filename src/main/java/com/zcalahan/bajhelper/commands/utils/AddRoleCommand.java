@@ -6,8 +6,12 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class AddRoleCommand extends CommandBase {
@@ -20,13 +24,24 @@ public class AddRoleCommand extends CommandBase {
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        String emoji = Objects.requireNonNull(event.getOption("emoji")).getAsString();
-        emoji = Emoji.fromFormatted(emoji).toString();
-        String rolename = Objects.requireNonNull(event.getOption("rolename")).getAsString();
-        RoleSelectListener.roles.put(emoji, rolename);
-        RoleSelectListener.saveRoles(Objects.requireNonNull(event.getGuild()));
-        event.getGuild().createRole().setName(rolename).complete();
-        event.reply("Done.").setEphemeral(ephemeral).queue();
+        // Check that all options are filled out.
+        List<OptionMapping> validator = new ArrayList<>();
+        validator.add(event.getOption("emoji"));
+        validator.add(event.getOption("rolename"));
+
+
+        if (validateOptions(validator)) {
+            String emoji = Objects.requireNonNull(event.getOption("emoji")).getAsString();
+            emoji = Emoji.fromFormatted(emoji).toString();
+
+            String rolename = Objects.requireNonNull(event.getOption("rolename")).getAsString();
+            RoleSelectListener.roles.put(emoji, rolename);
+            RoleSelectListener.saveRoles(Objects.requireNonNull(event.getGuild()));
+            event.getGuild().createRole().setName(rolename).complete();
+            event.reply("Done.").setEphemeral(ephemeral).queue();
+        } else {
+            event.reply("The command you sent was not properly filled out.").setEphemeral(true).queue();
+        }
     }
 
     @Override

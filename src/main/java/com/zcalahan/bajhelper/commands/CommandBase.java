@@ -2,8 +2,10 @@ package com.zcalahan.bajhelper.commands;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import java.util.List;
 
 /**
  * Abstract class representing what each command requires to be used.
@@ -38,5 +40,16 @@ public abstract class CommandBase extends ListenerAdapter {
     /** Determines how the command is used by Discord */
     public SlashCommandData updateCommand() {
         return Commands.slash(name, commandDescription);
+    }
+
+    /** Checks to make sure options aren't null on call of execute(). */
+
+    public boolean validateOptions(List<OptionMapping> listOfOptions) {
+        for (OptionMapping map : listOfOptions) {
+            if (map == null) {
+                return false;
+            }
+        }
+        return true;
     }
 }
