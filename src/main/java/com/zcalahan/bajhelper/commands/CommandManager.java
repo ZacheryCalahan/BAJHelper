@@ -1,6 +1,7 @@
 package com.zcalahan.bajhelper.commands;
 
 import com.zcalahan.bajhelper.BotConfiguration;
+import com.zcalahan.bajhelper.commands.utils.AddRoleCommand;
 import com.zcalahan.bajhelper.commands.utils.NewGuildCommand;
 import com.zcalahan.bajhelper.commands.utils.ServerPrintCommand;
 import com.zcalahan.bajhelper.commands.voicehubcommands.*;
@@ -31,6 +32,7 @@ public class CommandManager extends ListenerAdapter {
         commands.put("ping", new PingCommand("ping"));
         commands.put("print", new ServerPrintCommand("print"));
         commands.put("report-user", new ReportCommand("report-user"));
+        commands.put("add-role", new AddRoleCommand("add-role"));
 
         // Hub Commands
         commands.put("set-whitelist", new SetWhitelistCommand("set-whitelist"));
@@ -46,12 +48,11 @@ public class CommandManager extends ListenerAdapter {
     /** The function of this event listener is to add guild commands on join. */
     @Override
     public void onGuildJoin(GuildJoinEvent event) {
-        uploadGuildCommand(event.getGuild());
+        uploadGuildCommands(event.getGuild());
     }
 
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-        System.out.println(event.getName());
         if (commands.containsKey(event.getName())) {
             CommandBase command = commands.get(event.getName());
 
@@ -72,7 +73,6 @@ public class CommandManager extends ListenerAdapter {
                 event.getHook().sendMessage("You can't use this command in this channel. Please use the " + BotConfiguration.botCommandChannel + " channel.").queue();
                 return;
             }
-            System.out.println(event.getName() + " has been run.");
             command.execute(event);
         }
     }
@@ -89,7 +89,7 @@ public class CommandManager extends ListenerAdapter {
     }
 
     /** Called only when a guild specific command is added */
-    public void uploadGuildCommand(Guild guild) {
+    public void uploadGuildCommands(Guild guild) {
         List<CommandData> slashCommands = new ArrayList<>();
         List<String> commandKeys = new ArrayList<>(guildCommands.keySet());
         for (String key:commandKeys) {

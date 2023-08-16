@@ -2,7 +2,7 @@
 
 ## What is this?
 This is a discord bot that is coded in Java that shows off the basics of a Command Manager system and a role selection system.
-The bot logs no information, and is extensible.
+The bot logs no information, and only stores the emoji string and role when you use the RoleSelectListener.
 
 ## Getting Started
 In order to use this bot, it will require a token from your bot. 
