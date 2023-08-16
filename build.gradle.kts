@@ -7,7 +7,7 @@ plugins {
 application.mainClass = "com.zcalahan.bajhelper.Bot" //
 
 group = "com.zcalahan"
-version = "23w33a"
+version = "0.2.0"
 
 val jdaVersion = "5.0.0-beta.13" //
 
