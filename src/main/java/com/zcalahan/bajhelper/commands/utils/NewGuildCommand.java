@@ -27,7 +27,7 @@ public class NewGuildCommand extends CommandBase {
     }
 
     @Override
-    public void execute(SlashCommandInteractionEvent event) {
+    public boolean execute(SlashCommandInteractionEvent event) {
 
             event.reply("Starting the configuration!").setEphemeral(true).queue();
             Guild guild = event.getGuild();
@@ -86,6 +86,7 @@ public class NewGuildCommand extends CommandBase {
                 guild.deleteCommandById(command.getIdLong()).queue();
             }
         }
+        return false;
     }
 
     @Override

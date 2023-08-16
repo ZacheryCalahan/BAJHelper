@@ -16,8 +16,9 @@ public class PingCommand extends CommandBase {
     }
 
     @Override
-    public void execute(SlashCommandInteractionEvent event) {
+    public boolean execute(SlashCommandInteractionEvent event) {
         event.deferReply().setEphemeral(ephemeral).queue();
         event.getHook().sendMessage("Pong!").queue();
+        return false;
     }
 }

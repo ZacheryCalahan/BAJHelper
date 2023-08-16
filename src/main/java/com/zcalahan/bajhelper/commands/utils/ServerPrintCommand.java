@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /** This is a command with no other use than to get the string representation of a Discord Emoji. */
 public class ServerPrintCommand extends CommandBase {
@@ -20,18 +21,19 @@ public class ServerPrintCommand extends CommandBase {
     }
 
     @Override
-    public void execute(SlashCommandInteractionEvent event) {
+    public boolean execute(SlashCommandInteractionEvent event) {
         // Check that all options are filled out.
         List<OptionMapping> validator = new ArrayList<>();
         validator.add(event.getOption("message"));
 
         if (validateOptions(validator)) {
             event.reply("I got it!").queue();
-            System.out.println(Emoji.fromFormatted(event.getOption("message").getAsString()));
+            System.out.println(Emoji.fromFormatted(Objects.requireNonNull(event.getOption("message")).getAsString()));
         } else {
             event.reply("The command you sent was not properly filled out.").setEphemeral(true).queue();
         }
 
+        return false;
     }
 
     @Override

@@ -1,6 +1,5 @@
-package com.zcalahan.bajhelper.commands.voicehubcommands;
+package com.zcalahan.bajhelper.commands;
 
-import com.zcalahan.bajhelper.commands.CommandBase;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
@@ -17,7 +16,7 @@ public class ReportCommand extends CommandBase {
     }
 
     @Override
-    public void execute(SlashCommandInteractionEvent event) {
+    public boolean execute(SlashCommandInteractionEvent event) {
         // Create the modal
         TextInput subject = TextInput.create("subject", "Rule Broken", TextInputStyle.SHORT)
                 .setPlaceholder("Who broke what rule")
@@ -37,6 +36,7 @@ public class ReportCommand extends CommandBase {
 
         // Send Modal
         event.replyModal(modal).queue();
+        return false;
     }
 
 

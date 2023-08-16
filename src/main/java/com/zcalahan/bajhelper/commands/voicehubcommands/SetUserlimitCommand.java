@@ -21,7 +21,10 @@ public class SetUserlimitCommand extends HubCommandBase {
     }
 
     @Override
-    public void execute(SlashCommandInteractionEvent event) {
+    public boolean execute(SlashCommandInteractionEvent event) {
+        // Checks that there are channels to edit. Prevents exception thrown when run out of context.
+        if (!super.execute(event)) return false;
+
         // Check that all options are filled out.
         List<OptionMapping> validator = new ArrayList<>();
         validator.add(event.getOption("userlimit"));
@@ -55,6 +58,7 @@ public class SetUserlimitCommand extends HubCommandBase {
         } else {
             event.reply("The command you sent was not properly filled out.").setEphemeral(true).queue();
         }
+        return false;
     }
 
 

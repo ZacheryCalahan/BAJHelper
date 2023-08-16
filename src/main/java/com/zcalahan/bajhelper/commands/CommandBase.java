@@ -31,10 +31,13 @@ public abstract class CommandBase extends ListenerAdapter {
         botChannelOnly = true;
     }
 
-    /** The code that is run when the command is called. */
-    public void execute(SlashCommandInteractionEvent event) {
+    /**
+     * The code that is run when the command is called.
+     */
+    public boolean execute(SlashCommandInteractionEvent event) {
         event.deferReply().setEphemeral(ephemeral).queue();
         event.getHook().sendMessage("This command has no implementation.").queue();
+        return false;
     }
 
     /** Determines how the command is used by Discord */

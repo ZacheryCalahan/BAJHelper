@@ -22,7 +22,10 @@ public class WhitelistCommand extends HubCommandBase {
     }
 
     @Override
-    public void execute(SlashCommandInteractionEvent event) {
+    public boolean execute(SlashCommandInteractionEvent event) {
+        // Checks that there are channels to edit. Prevents exception thrown when run out of context.
+        if (!super.execute(event)) return false;
+
         // Check that all options are filled out.
         List<OptionMapping> validator = new ArrayList<>();
         validator.add(event.getOption("isadded"));
@@ -68,6 +71,7 @@ public class WhitelistCommand extends HubCommandBase {
         }
 
 
+        return false;
     }
 
     @Override
