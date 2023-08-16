@@ -10,5 +10,7 @@ public interface BotConfiguration {
     String voiceHubChannel = "Hub (Join for Voice Channel)";
     /** Category of where the voice hub is located */
     String voiceHubCategory = "Hub Channels";
+    /** Channel that houses the report feedback.*/
+    String reportsChannel = "user-reports";
 
 }

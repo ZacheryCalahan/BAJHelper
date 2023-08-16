@@ -53,7 +53,9 @@ public class VoiceHubListener extends ListenerAdapter {
                 .addPermissionOverride(member, EnumSet.of(Permission.VIEW_CHANNEL), null)
                 .addPermissionOverride(guild.getPublicRole(), null, EnumSet.of(Permission.VIEW_CHANNEL))
                 .setParent(category).complete();
-        textChannel.sendMessage(member.getAsMention() + " This is a channel for your Voice Channel's moderation.").queue(); // This is never null, but nothing really happens if it is.
+        textChannel.sendMessage("This is a channel for your Voice Channel's moderation. The available commands are: \n" +
+                "```/rename-channel name\n/set-userlimit userlimit (0-99)\n/set-whitelist isWhitelist\n/whitelist idAdded (add/remove user) username.``` " +
+                "Regardless of setting, admins may see the channel, and the text channel.").queue(); // This is never null, but nothing really happens if it is.
 
         // Tie Voice and Text channels together so they are disposed of together. Then tie a member to the channels so the user may use commands.
         channelTies.put(voiceChannel, textChannel);
@@ -67,8 +69,16 @@ public class VoiceHubListener extends ListenerAdapter {
         // Remove voice channel
         voiceChannel.delete().queue();
 
-        // Find and remove text channel, then remove storage of channels.
+        // Find and remove text channel
         channelTies.get(voiceChannel).delete().queue();
+
+        // Remove permission mapping of channels and members
+        Member member = null;
+        for (Member admin : voiceAdmin.keySet()) {
+            member = admin;
+            break;
+        }
+        voiceAdmin.remove(member);
         channelTies.remove(voiceChannel);
     }
 }

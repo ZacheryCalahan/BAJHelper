@@ -1,6 +1,7 @@
 package com.zcalahan.bajhelper;
 
 import com.zcalahan.bajhelper.commands.CommandManager;
+import com.zcalahan.bajhelper.listeners.ModalListener;
 import com.zcalahan.bajhelper.listeners.RoleSelectListener;
 import com.zcalahan.bajhelper.listeners.VoiceHubListener;
 import net.dv8tion.jda.api.JDA;
@@ -29,6 +30,7 @@ public class Bot {
         api.addEventListener(new CommandManager(api));
         api.addEventListener(new RoleSelectListener());
         api.addEventListener(new VoiceHubListener());
+        api.addEventListener(new ModalListener());
     }
 }
 
