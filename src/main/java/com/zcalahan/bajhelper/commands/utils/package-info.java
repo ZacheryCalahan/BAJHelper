@@ -1,6 +1,5 @@
 /**
- *  Package containing commands solely used for development reasons. Do not use these for
- *  a production build.
+ *  Package containing commands for developing the bot, or for interfacing with the bot more directly.
  */
 
 package com.zcalahan.bajhelper.commands.utils;
